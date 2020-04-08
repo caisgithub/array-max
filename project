@@ -1,0 +1,72 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<math.h>
+#define Max(a,b) ((a)>(b)?(a):(b))
+struct st
+{
+	int a;
+	struct st* next;
+};
+
+int array(int n)
+{
+	int i, b, leap = 0, max = 0, max1 = 0, sum = 0;
+	struct st* p, * q, * head;
+	if (n < 0)
+	{
+		printf("输入逻辑错误，结束本次程序！");
+		exit(0);
+	}
+	else if (n > 0)
+	{
+		printf("请输入数组元素：");
+		for (i = 0; i < n; i++)
+		{
+			scanf("%d", &b);
+			p = new struct st;
+			if (p == NULL)
+			{
+				exit(0);
+			}
+			p->a = b;
+			p->next = NULL;
+			if (i == 0)
+			{
+				head = p;
+				q = p;
+			}
+			else
+			{
+				q->next = p;
+				q = p;
+			}
+		}
+		for (q = head, i = 0; i < n; i++, q = q->next)
+		{
+			p = q;
+			while (p != NULL)
+			{
+				sum = sum + p->a;
+				max1 = Max(max1, sum);
+				p = p->next;
+			}
+			sum = 0;
+			max = Max(max, max1);
+		}
+	}
+	else
+	{
+		max = 0;
+	}
+	return max;
+}
+
+int main()
+{
+	int max, n;
+	printf("请输入数组长度：");
+	scanf("%d", &n);
+	max = array(n);
+	printf("最大连续子数组和为：%d", max);
+	return 0;
+}
